@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CardsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -7,6 +8,4 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/tarjetas', function (){
-    return "Tarjetas";
-});
+Route::get('/cards', [CardsController::class, 'index']);
