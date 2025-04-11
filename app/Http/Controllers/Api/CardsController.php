@@ -28,7 +28,7 @@ class CardsController extends Controller
         // Validar los datos de entrada
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'url' => 'required|string|unique:Cards,url',
+            'url' => 'required|string|unique:cards,url',
         ]);
 
         // Comprobar si la validación falla
@@ -42,7 +42,7 @@ class CardsController extends Controller
         // Retornar la respuesta con el registro creado
         return response()->json(['carta' => $card], 201);
     }
-    public function udpate(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $card = Cards::find($id);
 
@@ -54,7 +54,7 @@ class CardsController extends Controller
         // Validar los datos de entrada
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'url' => 'required|string|unique:Cards,url',
+            'url' => 'required|string|unique:cards,url',
         ]);
 
         // Comprobar si la validación falla
@@ -75,6 +75,6 @@ class CardsController extends Controller
             return response()->json(['message' => 'Carta no encontrada.'], 404);
         }
         $carta->delete();
-        return response()->json(['message' => 'Carta no encontrada.'], 200);
+        return response()->json(['message' => 'Carta eliminada correctamente.'], 200);
     }
 }
