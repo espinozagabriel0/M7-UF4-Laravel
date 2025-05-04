@@ -1,0 +1,7 @@
+[phases.setup]
+nixPkgs = [
+  "php83Packages.composer",
+  "nodePackages.yarn",
+  # Prioridad más baja para composer (evita colisión)
+  '(lib.recursiveUpdate php83Packages.composer { meta.priority = php83Packages.composer.meta.priority or 0 -1; })'
+]
