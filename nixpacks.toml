@@ -4,5 +4,6 @@ nixPkgs = [
   "php83Packages.composer",
   "nodejs_20",
   "nodePackages.yarn",
+  "nginx",
   '(lib.recursiveUpdate php83Packages.composer { meta.priority = php83Packages.composer.meta.priority or 0 -1; })'
 ]
