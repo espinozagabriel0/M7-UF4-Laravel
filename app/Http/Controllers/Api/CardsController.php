@@ -9,9 +9,15 @@ use Illuminate\Support\Facades\Validator;
 
 class CardsController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $cards = Cards::all();
+        $limit = $request->query('limit');
+
+        if($limit){
+            $cards = Cards::inRandomOrder()->take($limit)->get();
+        }else{
+            $cards = Cards::all();
+        }
         return response()->json(['cards' => $cards], 200);
     }
 
