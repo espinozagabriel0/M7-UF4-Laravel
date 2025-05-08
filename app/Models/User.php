@@ -47,7 +47,7 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
-    // 
+    //
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -56,5 +56,9 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+    public function games()
+    {
+        return $this->hasMany(Game::class);
     }
 }
