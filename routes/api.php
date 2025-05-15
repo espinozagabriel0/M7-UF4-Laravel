@@ -4,6 +4,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CardsController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GameController;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsUserAuth;
@@ -30,6 +31,15 @@ Route::middleware([IsUserAuth::class])->group(function () {
     // Crear card
     Route::post('/cards', [CardsController::class, 'store']);
 
+
+    // Categorias
+    Route::get('/categories', [CategoryController::class, 'index']);
+    Route::post('/categories', [CategoryController::class, 'store']);
+    Route::put('/categories/{category}', [CategoryController::class, 'update']);
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
+
+    Route::get('/cards/category/{categoryId}', [CardsController::class, 'getByCategory']);
+
     // Partidas
     Route::get('/games', [GameController::class, 'index']);
     Route::post('/games', [GameController::class, 'store']);
@@ -52,6 +62,6 @@ Route::middleware([IsAdmin::class])->group(function () {
 
     // CRUD Partidas
     Route::get('/games', [GameController::class, 'index']);
-    Route::delete('/games/{game}', [GameController::class, 'destroy']); 
+    Route::delete('/games/{game}', [GameController::class, 'destroy']);
     Route::get('/users/{id}/games', [GameController::class, 'getGamesByUserId']);
 });

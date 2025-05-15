@@ -13,9 +13,9 @@ class CardsController extends Controller
     {
         $limit = $request->query('limit');
 
-        if($limit){
+        if ($limit) {
             $cards = Cards::inRandomOrder()->take($limit)->get();
-        }else{
+        } else {
             $cards = Cards::all();
         }
         return response()->json(['cards' => $cards], 200);
@@ -82,5 +82,13 @@ class CardsController extends Controller
         }
         $carta->delete();
         return response()->json(['message' => 'Carta eliminada correctamente.'], 200);
+    }
+
+    // Obtener cartas filtradas por categoryId
+    public function getByCategory($categoryId)
+    {
+        $cards = Cards::where('category_id', $categoryId)->get();
+
+        return response()->json($cards);
     }
 }
