@@ -21,6 +21,9 @@ Route::post('login', [AuthController::class, 'login']);
 Route::get('/cards', [CardsController::class, 'index']);
 Route::get('/cards/{id}', [CardsController::class, 'show']);
 
+// Tarjetas publicas
+// Route::get('/public-cards', [CardsController::class, 'publicCards']);
+
 // PROTECTED ROUTES
 
 Route::middleware([IsUserAuth::class])->group(function () {
@@ -30,6 +33,9 @@ Route::middleware([IsUserAuth::class])->group(function () {
 
     // Crear card
     Route::post('/cards', [CardsController::class, 'store']);
+
+    // Mis cartas
+    Route::get('/my-cards', [CardsController::class, 'myCards']);
 
 
     // Categorias
