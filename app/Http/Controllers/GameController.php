@@ -46,14 +46,17 @@ class GameController extends Controller
             return response()->json(['error' => 'No tienes permisos.'], 403);
         }
 
-        $game->update([
-            'clicks' => $request->input('clicks'),
-            'points' => $request->input('points'),
-            'duration' => $request->input('duration')
+        $validated = $request->validate([
+            'clicks' => 'required|integer|min:0',
+            'points' => 'required|integer|min:0',
+            'duration' => 'required|integer|min:1',
         ]);
 
+
+        $game->update($validated);
+
         return response()->json([
-            'message' => 'Game updated successfully',
+            'message' => 'Partida Finalizada',
             'game info' => $game
         ]);
     }
