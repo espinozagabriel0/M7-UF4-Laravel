@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 // PUBLIC ROUTES
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
-Route::get('/cards', [CardsController::class, 'index']);
+Route::get('/public-cards', [CardsController::class, 'publicCards']);
 Route::get('/cards/{id}', [CardsController::class, 'show']);
 
 // Tarjetas publicas
@@ -31,11 +31,13 @@ Route::middleware([IsUserAuth::class])->group(function () {
     Route::post(('logout'), [AuthController::class, 'logout']);
     Route::get('me', [AuthController::class, 'getUser']);
 
-    // Crear card
-    Route::post('/cards', [CardsController::class, 'store']);
-
     // Mis cartas
     Route::get('/my-cards', [CardsController::class, 'myCards']);
+
+    // Crear/modificar cards propias
+    Route::post('/cards', [CardsController::class, 'store']);
+    Route::put('/cards/{id}', [CardsController::class, 'update']);
+    Route::delete('/cards/{id}', [CardsController::class, 'destroy']);
 
 
     // Categorias
@@ -64,7 +66,7 @@ Route::middleware([IsAdmin::class])->group(function () {
     // CRUD Cards
     Route::post('/cards', [CardsController::class, 'store']);
     Route::put('/cards/{id}', [CardsController::class, 'update']);
-    Route::delete('/cards/{id}', [CardsController::class, 'destroy']);
+    Route::delete('/cards/{card}', [CardsController::class, 'destroy']);
 
     // CRUD Partidas
     Route::get('/games', [GameController::class, 'index']);

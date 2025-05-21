@@ -21,6 +21,23 @@ class CardsController extends Controller
         }
         return response()->json(['cards' => $cards], 200);
     }
+    // obtener cards con user_id = null
+    public function publicCards(Request $request)
+    {
+        $limit = $request->query('limit');
+
+        if ($limit) {
+            $cards = Cards::whereNull('user_id')
+                ->inRandomOrder()
+                ->take($limit)
+                ->get();
+        } else {
+            $cards = Cards::whereNull('user_id')->get();
+        }
+
+        return response()->json(['cards' => $cards], 200);
+    }
+
 
     public function show($id)
     {
@@ -52,16 +69,22 @@ class CardsController extends Controller
     public function update(Request $request, $id)
     {
         $card = Cards::find($id);
+        $user = Auth::user();
 
         // Verificar si la carta existe
         if (!$card) {
             return response()->json(['message' => 'Carta no encontrada.'], 404);
         }
 
+        if ($card->user_id !== $user->id && $user->role !== 'admin') {
+            return response()->json(['error' => 'No autorizado.'], 403);
+        }
+
         // Validar los datos de entrada
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'url' => 'required|string|unique:cards,url',
+            'category_id' => 'nullable|exists:categories,id'
         ]);
 
         // Comprobar si la validación falla
