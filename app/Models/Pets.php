@@ -5,17 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cards extends Model
+class Pets extends Model
 {
     use HasFactory;
-    protected $table = 'cards';
-    protected $fillable = ['name', 'url'];
-
-    // Relación 1-1
-    public function category()
-    {
-        return $this->belongsTo(Category::class);
-    }
+    protected $table = 'pets';
+    protected $fillable = ['user_id', 'name', 'peso', 'imagen', 'desc'];
 
     public function user()
     {
