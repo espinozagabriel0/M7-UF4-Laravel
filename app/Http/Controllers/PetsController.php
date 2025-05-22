@@ -15,10 +15,22 @@ class PetsController extends Controller
         return response()->json($pets);
     }
 
-    public function show($id)
+    public function getPetsByUserId($id)
     {
-        $pets = Pets::where('user_id', $id)->get();
-        return response()->json($pets);
+        if (!Auth::user()->isAdmin) {
+            return response()->json(['error' => 'No tienes permisos'], 403);
+        }
+
+        $pets = Pets::where('user_id', $id)->with('user')->get();
+
+        if ($pets->isEmpty()) {
+            return response()->json(['message' => 'Este usuario no tiene ninguna mascota o no existe.'], 404);
+        }
+
+        return response()->json([
+            'message' => 'Mascotas del usuario encontradas.',
+            'data' => $pets
+        ]);
     }
 
 

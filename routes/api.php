@@ -19,7 +19,7 @@ Route::post('login', [AuthController::class, 'login']);
 Route::middleware([IsUserAuth::class])->group(function () {
     // Auth
     Route::post(('logout'), [AuthController::class, 'logout']);
-    Route::get('me', [AuthController::class, 'getUser']);
+    // Route::get('me', [AuthController::class, 'getUser']);
 
     // Mascotas
     Route::get('/pets', [PetsController::class, 'index']);
@@ -38,6 +38,6 @@ Route::middleware([IsAdmin::class])->group(function () {
     Route::delete('/users/{id}', [AuthController::class, 'deleteUser']);
 
     // Pets
-    Route::get('/users/{id}/pets', [PetsController::class, 'show']);
+    Route::get('/users/{id}/pets', [PetsController::class, 'getPetsByUserId']);
 
 });
