@@ -82,7 +82,7 @@ class PetsController extends Controller
 
         $pet->update($request->all());
 
-        return response()->json(['mascota' => $pet], 200);
+        return response()->json(['mascota actualizada' => $pet], 200);
     }
 
 
@@ -113,7 +113,7 @@ class PetsController extends Controller
 
         $pet->update($request->all());
 
-        return response()->json(['mascota' => $pet], 200);
+        return response()->json(['mascota actualizada parcialmente' => $pet], 200);
     }
 
 
