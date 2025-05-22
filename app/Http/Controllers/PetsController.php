@@ -27,12 +27,16 @@ class PetsController extends Controller
         $request->validate([
             'name' => 'required|string|max:50',
             'peso' => 'required|numeric',
+            'imagen' => 'nullable|string|max:255',
+            'desc'   => 'nullable|string|max:255',
         ]);
 
         $mascota = Pets::create([
             'user_id' => Auth::id(),
             'name' => $request->name,
             'peso' => $request->peso,
+            'imagen' => $request->imagen,
+            'desc' => $request->desc
         ]);
 
         return response()->json([
