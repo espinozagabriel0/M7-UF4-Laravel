@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class IsAdmin
+class IsAuthenticated
 {
     /**
      * Handle an incoming request.
@@ -15,13 +15,12 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user = auth('api')->user();
-        if ($user && $user->role == 'admin') {
+        if (auth('api')->user()) {
             return $next($request);
         } else {
             return response()->json([
-                'message' => 'Unauthorized'
-            ], 403);
+                'message' => 'Unauthorized Invalid Token'
+            ], 401);
         }
     }
 }
