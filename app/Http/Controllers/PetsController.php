@@ -17,7 +17,7 @@ class PetsController extends Controller
 
     public function getPetsByUserId($id)
     {
-        if (!Auth::user()->isAdmin) {
+        if (Auth::user()->role !== "admin") {
             return response()->json(['error' => 'No tienes permisos'], 403);
         }
 

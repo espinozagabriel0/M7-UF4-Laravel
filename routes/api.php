@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PetsController;
-use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsAuthenticated;
 use App\Http\Middleware\IsUserAdmin;
 use Illuminate\Http\Request;
