@@ -132,4 +132,27 @@ class CardsController extends Controller
             'data' => $cards
         ]);
     }
+
+    public function all()
+    {
+        return Cards::with('user', 'category')->get();
+    }
+    public function adminDestroy(Cards $card)
+    {
+        $card->delete();
+        return response()->json(['message' => 'Targeta eliminada por admin']);
+    }
+    public function adminUpdate(Request $request, Cards $card)
+    {
+        $request->validate([
+            'nombre' => 'sometimes|string|max:100',
+            'url_imagen' => 'sometimes|url',
+            'category_id' => 'nullable|exists:categories,id',
+        ]);
+        $card->update($request->all());
+        return response()->json([
+            'message' => 'Targeta actualizada por admin',
+            'data' => $card
+        ]);
+    }
 }

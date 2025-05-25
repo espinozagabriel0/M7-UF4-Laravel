@@ -64,9 +64,10 @@ Route::middleware([IsAdmin::class])->group(function () {
     Route::delete('/users/{id}', [AuthController::class, 'deleteUser']);
 
     // CRUD Cards
+    Route::get('/cards', [CardsController::class, 'all']);
     Route::post('/cards', [CardsController::class, 'store']);
-    Route::put('/cards/{id}', [CardsController::class, 'update']);
-    Route::delete('/cards/{card}', [CardsController::class, 'destroy']);
+    Route::put('/cards/{id}', [CardsController::class, 'adminUpdate']);
+    Route::delete('/cards/{card}', [CardsController::class, 'adminDestroy']);
 
     // CRUD Partidas
     Route::get('/games', [GameController::class, 'index']);
