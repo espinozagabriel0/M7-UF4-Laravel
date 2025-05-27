@@ -72,7 +72,7 @@ Route::middleware([IsAdmin::class])->group(function () {
     Route::delete('/cards/{card}', [CardsController::class, 'adminDestroy']);
 
     // CRUD Partidas
-    Route::get('/games', [GameController::class, 'all']);
+    Route::get('/gamesAll', [GameController::class, 'all']);
     // Route::delete('/games/{game}', [GameController::class, 'destroy']);
     Route::get('/users/{id}/games', [GameController::class, 'getGamesByUserId']);
 });
