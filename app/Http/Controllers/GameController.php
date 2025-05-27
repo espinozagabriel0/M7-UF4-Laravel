@@ -14,6 +14,13 @@ class GameController extends Controller
         return response()->json($games);
     }
 
+    public function all()
+    {
+        $games = Game::all();
+        return response()->json($games);
+    }
+
+
     public function store(Request $request)
     {
         $game = Game::create([
@@ -65,7 +72,7 @@ class GameController extends Controller
     public function destroy(Game $game)
     {
         if ($game->user_id !== Auth::id() && !Auth::user()->isAdmin) {
-            return response()->json(['error' => 'No tienes permiso para  eliminar esta partida'], 403);
+            return response()->json(['error' => 'No tienes permiso para eliminar esta partida'], 403);
         }
 
         $game->delete();

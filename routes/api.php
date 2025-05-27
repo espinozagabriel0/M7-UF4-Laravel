@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::get('/public-cards', [CardsController::class, 'publicCards']);
-Route::get('/cards/{id}', [CardsController::class, 'show']);
+// Route::get('/cards/{id}', [CardsController::class, 'show']);
 
 // Tarjetas publicas
 // Route::get('/public-cards', [CardsController::class, 'publicCards']);
@@ -53,6 +53,7 @@ Route::middleware([IsUserAuth::class])->group(function () {
     Route::post('/games', [GameController::class, 'store']);
     Route::put('/games/{game}/finish', [GameController::class, 'update']);
     Route::get('/ranking', [GameController::class, 'ranking']);
+    Route::delete('/games/{game}', [GameController::class, 'destroy']);
 });
 
 // ADMIN ROUTES
@@ -64,13 +65,14 @@ Route::middleware([IsAdmin::class])->group(function () {
     Route::delete('/users/{id}', [AuthController::class, 'deleteUser']);
 
     // CRUD Cards
+    Route::get('/cards/{id}', [CardsController::class, 'show']);
     Route::get('/cards', [CardsController::class, 'all']);
-    Route::post('/cards', [CardsController::class, 'store']);
+    // Route::post('/cards', [CardsController::class, 'store']); --> está repetido
     Route::put('/cards/{id}', [CardsController::class, 'adminUpdate']);
     Route::delete('/cards/{card}', [CardsController::class, 'adminDestroy']);
 
     // CRUD Partidas
-    Route::get('/games', [GameController::class, 'index']);
-    Route::delete('/games/{game}', [GameController::class, 'destroy']);
+    Route::get('/games', [GameController::class, 'all']);
+    // Route::delete('/games/{game}', [GameController::class, 'destroy']);
     Route::get('/users/{id}/games', [GameController::class, 'getGamesByUserId']);
 });
