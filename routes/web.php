@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\VideogameController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,3 +29,4 @@ Route::get('/', function () {
 
 
 Route::resource('books', BookController::class);
+Route::resource('videogames', VideogameController::class);

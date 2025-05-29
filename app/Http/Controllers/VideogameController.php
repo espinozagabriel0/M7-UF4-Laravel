@@ -12,7 +12,8 @@ class VideogameController extends Controller
      */
     public function index()
     {
-        //
+        $videogames = Videogame::all();
+        return view('videogames.index', compact('videogames'));
     }
 
     /**
@@ -20,7 +21,7 @@ class VideogameController extends Controller
      */
     public function create()
     {
-        //
+        return view('videogames.create');
     }
 
     /**
@@ -28,7 +29,15 @@ class VideogameController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'genre' => 'nullable|string|max:255',
+            'developer' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        Videogame::create($request->all());
+        return redirect()->route('videogames.index')->with('success', 'Videojuego creado correctamente!');
     }
 
     /**
@@ -36,7 +45,7 @@ class VideogameController extends Controller
      */
     public function show(Videogame $videogame)
     {
-        //
+        return view('videogames.show', compact('videogame'));
     }
 
     /**
@@ -44,7 +53,7 @@ class VideogameController extends Controller
      */
     public function edit(Videogame $videogame)
     {
-        //
+        return view('videogames.edit', compact('videogame'));
     }
 
     /**
@@ -52,7 +61,15 @@ class VideogameController extends Controller
      */
     public function update(Request $request, Videogame $videogame)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'genre' => 'nullable|string|max:255',
+            'developer' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        $videogame->update($request->all());
+        return redirect()->route('videogames.index')->with('success', 'Videojuego actualizado correctamente!');
     }
 
     /**
@@ -60,6 +77,7 @@ class VideogameController extends Controller
      */
     public function destroy(Videogame $videogame)
     {
-        //
+        $videogame->delete();
+        return redirect()->route('videogames.index')->with('success', 'Videojuego eliminado correctamente!');
     }
 }
