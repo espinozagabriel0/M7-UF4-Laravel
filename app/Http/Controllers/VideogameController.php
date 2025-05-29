@@ -19,6 +19,7 @@ class VideogameController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+    // solo retorna la vista de form
     public function create()
     {
         return view('videogames.create');

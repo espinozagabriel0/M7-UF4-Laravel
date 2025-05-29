@@ -1,0 +1,13 @@
+@extends('layouts.videogameapp')
+
+@section('content')
+    <div class="container">
+        <h1 class="text-2xl font-bold mb-6">Nuevo Videojuego</h1>
+        <form action="{{ route('videogames.store', [], true) }}" method="POST">
+            @csrf
+            @include('videogames.form')
+            <button type="submit"
+                class="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition cursor-pointer">Desa</button>
+        </form>
+    </div>
+@endsection
