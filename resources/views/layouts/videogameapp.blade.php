@@ -9,7 +9,7 @@
 
 <body class="bg-gray-100 text-gray-900 min-h-screen">
 
-    <nav class="bg-slate-200 shadow mb-6">
+    <nav class="bg-slate-100 shadow mb-6">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <a class="text-2xl font-bold text-black hover:text-slate-800 transition"
                 href="{{ route('videogames.index') }}">
