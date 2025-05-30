@@ -16,7 +16,7 @@ class GameController extends Controller
 
     public function all()
     {
-        $games = Game::all();
+        $games = Game::with('user')->get();
         return response()->json($games);
     }
 
