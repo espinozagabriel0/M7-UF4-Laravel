@@ -49,7 +49,7 @@ class GameController extends Controller
 
     public function update(Request $request, Game $game)
     {
-        if ($game->user_id !== Auth::id() && !Auth::user()->role !== 'admin') {
+        if ($game->user_id !== Auth::id() && Auth::user()->role !== 'admin') {
             return response()->json(['error' => 'No tienes permisos.'], 403);
         }
 
@@ -71,7 +71,7 @@ class GameController extends Controller
 
     public function destroy(Game $game)
     {
-        if ($game->user_id !== Auth::id() && !Auth::user()->role !== 'admin') {
+        if ($game->user_id !== Auth::id() && Auth::user()->role !== 'admin') {
             return response()->json(['error' => 'No tienes permiso para eliminar esta partida'], 403);
         }
 
@@ -85,7 +85,7 @@ class GameController extends Controller
     public function getGamesByUserId($id)
     {
         // Si es admin
-        if (!Auth::user()->isAdmin) {
+        if (Auth::user()->role !== 'admin') {
             return response()->json(['error' => 'No tienes permisos'], 403);
         }
 
