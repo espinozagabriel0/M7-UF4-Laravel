@@ -56,8 +56,8 @@ class CardsController extends Controller
         ]);
 
         $card = Cards::create([
-            'name' => $request->nombre,
-            'url' => $request->url_imagen,
+            'name' => $request->name,
+            'url' => $request->url,
             'category_id' => $request->category_id,
             'user_id' => Auth::id(),
         ]);
@@ -145,8 +145,8 @@ class CardsController extends Controller
     public function adminUpdate(Request $request, Cards $card)
     {
         $request->validate([
-            'nombre' => 'sometimes|string|max:100',
-            'url_imagen' => 'sometimes|url',
+            'name' => 'sometimes|string|max:100',
+            'url' => 'sometimes|url',
             'category_id' => 'nullable|exists:categories,id',
         ]);
         $card->update($request->all());
