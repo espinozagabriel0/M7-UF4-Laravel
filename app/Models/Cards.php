@@ -9,7 +9,7 @@ class Cards extends Model
 {
     use HasFactory;
     protected $table = 'cards';
-    protected $fillable = ['name', 'url'];
+    protected $fillable = ['name', 'url', 'category_id'];
 
     // Relación 1-1
     public function category()
