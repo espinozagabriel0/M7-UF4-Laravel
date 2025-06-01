@@ -7,6 +7,7 @@ use App\Models\Cards;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class CardsController extends Controller
 {
@@ -155,11 +156,16 @@ class CardsController extends Controller
     //         'data' => $card
     //     ]);
     // }
+
     public function adminUpdate(Request $request, Cards $card)
     {
         $request->validate([
             'name' => 'sometimes|string|max:100',
-            'url' => 'sometimes|url|unique:cards,url,' . $card->id,
+            'url' => [
+                'sometimes',
+                'url',
+                Rule::unique('cards')->ignore($card->id),
+            ],
             'category_id' => 'nullable|exists:categories,id',
         ]);
         $card->update($request->only(['name', 'url', 'category_id']));
