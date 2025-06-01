@@ -142,6 +142,19 @@ class CardsController extends Controller
         $card->delete();
         return response()->json(['message' => 'Targeta eliminada por admin']);
     }
+    // public function adminUpdate(Request $request, Cards $card)
+    // {
+    //     $request->validate([
+    //         'name' => 'sometimes|string|max:100',
+    //         'url' => 'sometimes|url',
+    //         'category_id' => 'nullable|exists:categories,id',
+    //     ]);
+    //     $card->update($request->all());
+    //     return response()->json([
+    //         'message' => 'Targeta actualizada por admin',
+    //         'data' => $card
+    //     ]);
+    // }
     public function adminUpdate(Request $request, Cards $card)
     {
         $request->validate([
@@ -149,10 +162,10 @@ class CardsController extends Controller
             'url' => 'sometimes|url',
             'category_id' => 'nullable|exists:categories,id',
         ]);
-        $card->update($request->all());
+        $card->update($request->only(['name', 'url', 'category_id']));
         return response()->json([
-            'message' => 'Targeta actualizada por admin',
-            'data' => $card
+            'message' => 'Tarjeta actualizada por admin',
+            'data' => $card->fresh()
         ]);
     }
 }
