@@ -68,7 +68,7 @@ Route::middleware([IsAdmin::class])->group(function () {
     Route::get('/cards/{id}', [CardsController::class, 'show']);
     Route::get('/cards', [CardsController::class, 'all']);
     // Route::post('/cards', [CardsController::class, 'store']); --> está repetido
-    Route::put('/cards/{card}', [CardsController::class, 'adminUpdate']);
+    Route::put('/cards/{id}', [CardsController::class, 'adminUpdate']);
     Route::delete('/cards/{card}', [CardsController::class, 'adminDestroy']);
 
     // CRUD Partidas

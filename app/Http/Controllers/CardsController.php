@@ -67,12 +67,43 @@ class CardsController extends Controller
         // Retornar la respuesta con el registro creado
         return response()->json(['message' => 'Tarjeta creada', 'carta' => $card], 201);
     }
+    // public function update(Request $request, $id)
+    // {
+    //     $card = Cards::find($id);
+    //     $user = Auth::user();
+
+    //     // Verificar si la carta existe
+    //     if (!$card) {
+    //         return response()->json(['message' => 'Carta no encontrada.'], 404);
+    //     }
+
+    //     if ($card->user_id !== $user->id && $user->role !== 'admin') {
+    //         return response()->json(['error' => 'No autorizado.'], 403);
+    //     }
+
+    //     // Validar los datos de entrada
+    //     $validator = Validator::make($request->all(), [
+    //         'name' => 'required|string|max:255',
+    //         'url' => 'required|string|unique:cards,url',
+    //         'category_id' => 'nullable|exists:categories,id'
+    //     ]);
+
+    //     // Comprobar si la validación falla
+    //     if ($validator->fails()) {
+    //         return response()->json(['errors' => $validator->errors()], 400);
+    //     }
+
+    //     // Actualizar los datos de la carta
+    //     $card->update($request->all());
+
+    //     // Retornar la respuesta con la carta actualizada
+    //     return response()->json(['carta' => $card], 200);
+    // }
     public function update(Request $request, $id)
     {
         $card = Cards::find($id);
         $user = Auth::user();
 
-        // Verificar si la carta existe
         if (!$card) {
             return response()->json(['message' => 'Carta no encontrada.'], 404);
         }
@@ -84,19 +115,20 @@ class CardsController extends Controller
         // Validar los datos de entrada
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'url' => 'required|string|unique:cards,url',
+            'url' => [
+                'required',
+                'string',
+                Rule::unique('cards')->ignore($id),
+            ],
             'category_id' => 'nullable|exists:categories,id'
         ]);
 
-        // Comprobar si la validación falla
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
 
-        // Actualizar los datos de la carta
         $card->update($request->all());
 
-        // Retornar la respuesta con la carta actualizada
         return response()->json(['carta' => $card], 200);
     }
     public function destroy($id)
@@ -157,18 +189,26 @@ class CardsController extends Controller
     //     ]);
     // }
 
-    public function adminUpdate(Request $request, Cards $card)
+    public function adminUpdate(Request $request, $id)
     {
+        // Buscar la carta por id (lanza 404 si no existe)
+        $card = Cards::findOrFail($id);
+
+        // Validar los datos, ignorando la url de la carta actual
         $request->validate([
             'name' => 'sometimes|string|max:100',
             'url' => [
                 'sometimes',
                 'url',
-                Rule::unique('cards')->ignore($card->id),
+                Rule::unique('cards')->ignore($id),
             ],
             'category_id' => 'nullable|exists:categories,id',
         ]);
+
+        // Actualizar la carta
         $card->update($request->only(['name', 'url', 'category_id']));
+
+        // Devolver la respuesta
         return response()->json([
             'message' => 'Tarjeta actualizada por admin',
             'data' => $card->fresh()
